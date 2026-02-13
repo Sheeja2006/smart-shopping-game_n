@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Shopping Challenge</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #e0c3fc, #8ec5fc);
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            color: #4b0082;
+            margin-top: 20px;
+        }
+
+        #timer {
+            font-size: 20px;
+            font-weight: bold;
+            color: red;
+        }
+
+        .products {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .item {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px;
+            width: 170px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+
+        .item:hover {
+            transform: scale(1.08);
+            background: #f3e8ff;
+        }
+
+        #bag {
+            margin: 20px auto;
+            padding: 20px;
+            width: 60%;
+            min-height: 100px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #4b0082;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        button:hover {
+            background: #6a0dad;
+        }
+
+        #result {
+            font-size: 22px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .confetti {
+            font-size: 25px;
+            animation: fall 2s infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10px); }
+            100% { transform: translateY(10px); }
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>🛍️ Smart Shopping Challenge</h1>
+<p>Select the smartest products within <span id="timer">15</span> seconds!</p>
+
+<div class="products">
+
+    <div class="item" onclick="addItem('Smartphone 50% OFF', 3)">
+        📱 Smartphone<br>50% OFF
+    </div>
+
+    <div class="item" onclick="addItem('Gaming Laptop Flash Sale', 2)">
+        💻 Gaming Laptop<br>Flash Sale ⚡
+    </div>
+
+    <div class="item" onclick="addItem('Headphones 4.9⭐', 3)">
+        🎧 Headphones<br>4.9⭐ Rating
+    </div>
+
+    <div class="item" onclick="addItem('Shoes No Reviews', -1)">
+        👟 Trendy Shoes<br>No Reviews ⚠️
+    </div>
+
+    <div class="item" onclick="addItem('Luxury Watch Overpriced', -2)">
+        ⌚ Luxury Watch<br>Overpriced 💸
+    </div>
+
+    <div class="item" onclick="addItem('Same Day Grocery Delivery', 2)">
+        🛒 Grocery Pack<br>Same Day 🚚
+    </div>
+
+</div>
+
+<h2>Your Shopping Bag 🛒</h2>
+<div id="bag">No items added yet.</div>
+
+<button onclick="checkResult()">Check Result</button>
+<button onclick="restartGame()">Restart</button>
+
+<div id="result"></div>
+
+<script>
+
+let bag = [];
+let score = 0;
+let timeLeft = 15;
+let timerInterval = setInterval(updateTimer, 1000);
+
+function updateTimer() {
+    timeLeft--;
+    document.getElementById("timer").innerText = timeLeft;
+
+    if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        alert("Time's Up! Check your result.");
+    }
+}
+
+function addItem(item, value) {
+
+    if (timeLeft <= 0) {
+        alert("Time is over!");
+        return;
+    }
+
+    if (bag.includes(item)) {
+        alert("Item already in bag!");
+        return;
+    }
+
+    bag.push(item);
+    score += value;
+
+    if (bag.length === 1) {
+        document.getElementById("bag").innerHTML = "";
+    }
+
+    document.getElementById("bag").innerHTML += item + "<br>";
+}
+
+function checkResult() {
+
+    let resultText = "";
+
+    if (score >= 6) {
+        resultText = "🏆 Smart Saver! You shop like a pro! 🎉<br><div class='confetti'>🎊🎊🎊</div>";
+    } 
+    else if (score >= 2) {
+        resultText = "😊 Balanced Shopper! Good decisions!";
+    } 
+    else {
+        resultText = "😅 Impulse Buyer! Compare more next time!";
+    }
+
+    document.getElementById("result").innerHTML = resultText;
+}
+
+function restartGame() {
+    location.reload();
+}
+
+</script>
+
+</body>
+</html>
+wh
